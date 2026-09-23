@@ -299,6 +299,8 @@ footer { background: var(--forest); color: var(--primary-foreground); text-align
 .secret-friends { margin-top: 2.5rem; }
 .secret-friends .gift-button { width: clamp(5rem, 12vw, 7.25rem); min-width: 5rem; min-height: 8.5rem; padding: .65rem .35rem; border-radius: var(--radius-control); }
 .secret-friends .gift-button-content { flex-direction: column; gap: .55rem; }
+.secret-friends .gift-button > .gift-button-content { font-size: inherit; filter: none; transform: none; }
+.secret-friends .gift-button:hover > .gift-button-content { transform: none; }
 .secret-friends .story-creature-svg { width: clamp(4rem, 8vw, 5.75rem); height: clamp(4rem, 8vw, 5.75rem); color: var(--primary-foreground); filter: drop-shadow(0 8px 12px color-mix(in oklab, var(--background) 12%, transparent)); transition: transform 300ms var(--ease-romantic); }
 .secret-friends .gift-button:hover .story-creature-svg { transform: translateY(-5px) rotate(2deg); }
 .secret-friends .gift-button.is-happy .story-creature-svg { animation: creature-happy 700ms var(--ease-romantic); }
@@ -306,6 +308,9 @@ footer { background: var(--forest); color: var(--primary-foreground); text-align
 .creature-message { grid-column: 1/-1; margin: -1rem auto 0; color: color-mix(in oklab, var(--primary-foreground) 78%, transparent); text-align: center; font-size: .78rem; }
 
 .secret-note { position: fixed; z-index: 110; left: 50%; bottom: max(1rem, env(safe-area-inset-bottom)); width: min(90vw, 25rem); transform: translateX(-50%); padding: .9rem 1rem; border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--card); color: var(--forest); box-shadow: var(--shadow-soft); text-align: center; font-family: var(--font-display); animation: secret-arrive 450ms var(--ease-romantic) both; }
+#inicio, #recuerdos { scroll-margin-top: 5rem; }
+.envelope { overflow: visible; }
+.love-letter p { font-family: var(--font-body); font-size: clamp(1rem, 1.5vw, 1.16rem); }
 
 @media (min-width: 1200px) {
   .hero-section { min-height: min(52rem, calc(100svh - 4.5rem)); }

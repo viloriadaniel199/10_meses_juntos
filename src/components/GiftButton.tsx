@@ -16,6 +16,7 @@ export function GiftButton({ children, kind = "primary", className = "", busy = 
   return (
     <button
       className={`${styles[kind]} ${className}`}
+      type={props.type ?? "button"}
       disabled={disabled || busy}
       aria-busy={busy || undefined}
       {...props}

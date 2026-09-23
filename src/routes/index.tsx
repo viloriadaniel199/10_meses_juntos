@@ -56,6 +56,7 @@ function Index() {
   const [greeting, setGreeting] = useState("Este momento es solo para nosotros");
   const [activeCreature, setActiveCreature] = useState<string | null>(null);
   const [secretTaps, setSecretTaps] = useState(0);
+  const [celebrating, setCelebrating] = useState(false);
 
   useEffect(() => {
     if (!opened) return;
@@ -90,9 +91,14 @@ function Index() {
   }, [opened]);
 
   const celebrate = () => {
+    if (celebrating) return;
+    setCelebrating(true);
     setHearts(Array.from({ length: 28 }, (_, index) => index));
     if (navigator.vibrate) navigator.vibrate(35);
-    window.setTimeout(() => setHearts([]), 3400);
+    window.setTimeout(() => {
+      setHearts([]);
+      setCelebrating(false);
+    }, 3800);
   };
 
   const meetFriend = (friend: string) => {
@@ -146,10 +152,10 @@ function Index() {
         </aside>
       )}
 
-      <section id="inicio" className="hero-section">
+      <section id="inicio" className="hero-section" aria-labelledby="story-title">
         <div className="hero-text" data-reveal>
           <span className="tiny-kicker">Una historia que elijo todos los días</span>
-          <h1><em>10</em> meses<br />de nosotros</h1>
+          <h1 id="story-title"><em>10</em> meses<br />de nosotros</h1>
           <p>De risas, besos, días bonitos, días difíciles y ese amor que siempre encuentra el camino de vuelta.</p>
           <span className="time-whisper">{greeting} ♡</span>
           <a href="#recuerdos" className="scroll-note">Baja despacito <span>↓</span></a>
@@ -248,6 +254,7 @@ function Index() {
       <div className="heart-rain" aria-hidden="true">
         {hearts.map((heart) => <span key={heart} style={{ "--i": heart } as CSSProperties}>♥</span>)}
       </div>
+      <span className="sr-only" aria-live="polite">{celebrating ? "Una lluvia de corazones celebra nuestro amor" : ""}</span>
       {secretTaps >= 3 && <div className="secret-note" role="status">Encontraste nuestro secreto: te elegiría en todas las vidas. ♡</div>}
     </main>
   );
