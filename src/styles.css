@@ -173,6 +173,10 @@
 
 @keyframes gentle-float { 50% { transform: translateY(-8px) rotate(2deg); } }
 @keyframes heart-fall { 0% { transform: translateY(-10vh) rotate(0); opacity: 0; } 12% { opacity: 1; } 100% { transform: translateY(110vh) rotate(480deg); opacity: 0; } }
+@keyframes tender-breathe { 50% { transform: translateY(-4px) scale(1.025); } }
+@keyframes drawer-arrive { from { opacity: 0; transform: translateY(-10px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes creature-happy { 35% { transform: translateY(-8px) rotate(-4deg) scale(1.08); } 70% { transform: translateY(-2px) rotate(4deg) scale(1.04); } }
+@keyframes secret-arrive { from { opacity: 0; transform: translate(-50%, 16px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
 .cover-screen { min-height: 100svh; display: grid; place-items: center; position: relative; overflow: hidden; background: radial-gradient(circle at 50% 38%, color-mix(in oklab, var(--sun) 22%, var(--paper)), var(--paper) 48%, var(--paper-deep)); padding: 2rem; }
 .cover-screen::before, .cover-screen::after { content: ""; position: absolute; width: 36vw; height: 70vh; border: 1px solid color-mix(in oklab, var(--leaf) 45%, transparent); border-radius: 50%; transform: rotate(34deg); left: -22vw; top: -10vh; }
@@ -185,6 +189,7 @@
 .cover-copy h1 { font-size: clamp(3.4rem, 10vw, 7.5rem); line-height: .92; color: var(--forest); margin: 0; }
 .cover-note { max-width: 28rem; margin: 1.6rem auto 2rem; color: var(--ink-soft); font-size: 1.05rem; line-height: 1.7; }
 .gift-button { border: 0; min-height: 3rem; display: inline-flex; align-items: center; justify-content: center; gap: .65rem; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease, background .2s ease; }
+.gift-button-content { display: inline-flex; align-items: center; justify-content: center; gap: .65rem; pointer-events: none; }
 .gift-button svg { width: 1.1rem; height: 1.1rem; }
 .gift-button-primary { padding: .85rem 1.3rem; background: var(--primary); color: var(--primary-foreground); border-radius: 999px; box-shadow: 0 10px 25px color-mix(in oklab, var(--primary) 25%, transparent); }
 .gift-button:hover { transform: translateY(-2px); }
@@ -229,4 +234,129 @@ footer { background: var(--forest); color: var(--primary-foreground); text-align
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
   [data-reveal] { opacity: 1; transform: none; }
+}
+
+/* Elegant scrapbook refinement: unified interaction and rhythm system */
+:root {
+  --space-1: .25rem;
+  --space-2: .5rem;
+  --space-3: .75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --radius-control: .875rem;
+  --radius-paper: .25rem;
+  --shadow-control: 0 8px 18px color-mix(in oklab, var(--forest) 18%, transparent);
+  --shadow-control-pressed: 0 3px 8px color-mix(in oklab, var(--forest) 16%, transparent);
+  --ease-romantic: cubic-bezier(.22, 1, .36, 1);
+  --ease-press: cubic-bezier(.2, .8, .2, 1);
+}
+
+.gift-button {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-control);
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 180ms var(--ease-press), box-shadow 220ms var(--ease-romantic), background-color 220ms ease, border-color 220ms ease, color 220ms ease;
+}
+.gift-button-primary { border-radius: var(--radius-control); box-shadow: var(--shadow-control); }
+.gift-button-paper { border-radius: var(--radius-control); box-shadow: var(--shadow-control); }
+.gift-button-icon { width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
+.gift-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 24px color-mix(in oklab, var(--forest) 22%, transparent); }
+.gift-button:active:not(:disabled) { transform: translateY(1px) scale(.96); box-shadow: var(--shadow-control-pressed); transition-duration: 80ms; }
+.gift-button-paper:hover:not(:disabled) { transform: translateX(-50%) translateY(-2px); }
+.gift-button-paper:active:not(:disabled) { transform: translateX(-50%) translateY(1px) scale(.97); }
+.gift-button:disabled, .gift-button[aria-busy="true"] { cursor: not-allowed; opacity: .56; filter: saturate(.65); box-shadow: none; }
+.gift-button[aria-busy="true"] .gift-button-content::after { content: ""; width: 1rem; height: 1rem; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(1turn); } }
+
+.story-progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 60; background: color-mix(in oklab, var(--paper) 70%, transparent); }
+.story-progress span { display: block; width: 100%; height: 100%; transform-origin: left; background: linear-gradient(90deg, var(--primary), var(--blush), var(--sun)); transition: transform 80ms linear; }
+.music-drawer { border-radius: var(--radius-control); animation: drawer-arrive 360ms var(--ease-romantic) both; }
+.music-drawer a { min-height: 44px; border-radius: var(--radius-control); transition: transform 160ms var(--ease-press), background-color 200ms ease; }
+.music-drawer a:hover { background: var(--forest); transform: translateY(-1px); }
+.music-drawer a:active { transform: scale(.96); }
+
+[data-reveal] { transform: translateY(22px) scale(.992); transition: opacity 700ms var(--ease-romantic), transform 800ms var(--ease-romantic); }
+.memory-card:nth-child(3n + 2) { transition-delay: 70ms; }
+.memory-card:nth-child(3n) { transition-delay: 140ms; }
+.time-whisper { display: block; width: fit-content; margin: -1rem 0 1.35rem; color: var(--primary); font-family: var(--font-display); font-style: italic; font-size: 1rem; }
+
+.story-creature-svg { width: 100%; height: 100%; overflow: visible; }
+.creature-fill { fill: color-mix(in oklab, var(--paper) 88%, var(--leaf)); }
+.creature-soft { stroke: var(--leaf); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.creature-line { stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.creature-accent { fill: var(--blush); }
+.cover-creatures { gap: 1rem; }
+.cover-creatures .story-creature-svg { width: 3rem; height: 3rem; color: var(--forest); animation: tender-breathe 4s ease-in-out infinite; }
+.cover-creatures .story-creature-svg:nth-child(2) { animation-delay: -1.3s; }
+.cover-creatures .story-creature-svg:nth-child(3) { animation-delay: -2.6s; }
+
+.secret-friends { margin-top: 2.5rem; }
+.secret-friends .gift-button { width: clamp(5rem, 12vw, 7.25rem); min-width: 5rem; min-height: 8.5rem; padding: .65rem .35rem; border-radius: var(--radius-control); }
+.secret-friends .gift-button-content { flex-direction: column; gap: .55rem; }
+.secret-friends .gift-button > .gift-button-content { font-size: inherit; filter: none; transform: none; }
+.secret-friends .gift-button:hover > .gift-button-content { transform: none; }
+.secret-friends .story-creature-svg { width: clamp(4rem, 8vw, 5.75rem); height: clamp(4rem, 8vw, 5.75rem); color: var(--primary-foreground); filter: drop-shadow(0 8px 12px color-mix(in oklab, var(--background) 12%, transparent)); transition: transform 300ms var(--ease-romantic); }
+.secret-friends .gift-button:hover .story-creature-svg { transform: translateY(-5px) rotate(2deg); }
+.secret-friends .gift-button.is-happy .story-creature-svg { animation: creature-happy 700ms var(--ease-romantic); }
+.secret-friends small { display: block; min-height: 2em; line-height: 1.2; }
+.creature-message { grid-column: 1/-1; margin: -1rem auto 0; color: color-mix(in oklab, var(--primary-foreground) 78%, transparent); text-align: center; font-size: .78rem; }
+
+.secret-note { position: fixed; z-index: 110; left: 50%; bottom: max(1rem, env(safe-area-inset-bottom)); width: min(90vw, 25rem); transform: translateX(-50%); padding: .9rem 1rem; border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--card); color: var(--forest); box-shadow: var(--shadow-soft); text-align: center; font-family: var(--font-display); animation: secret-arrive 450ms var(--ease-romantic) both; }
+#inicio, #recuerdos { scroll-margin-top: 5rem; }
+.envelope { overflow: visible; }
+.love-letter p { font-family: var(--font-body); font-size: clamp(1rem, 1.5vw, 1.16rem); }
+
+@media (min-width: 1200px) {
+  .hero-section { min-height: min(52rem, calc(100svh - 4.5rem)); }
+  .hero-text h1 { font-size: clamp(5rem, 7.2vw, 7.2rem); }
+  .memories-section { padding-top: 7rem; padding-bottom: 7rem; }
+  .together-section { min-height: 44rem; align-content: center; }
+}
+
+@media (max-width: 760px) {
+  .gift-page { background-size: 28px 28px; }
+  .topbar { height: calc(4rem + env(safe-area-inset-top)); padding-top: env(safe-area-inset-top); padding-inline: 1.25rem; }
+  .topbar > span { font-size: .82rem; }
+  .hero-section { display: flex; flex-direction: column; gap: 2.5rem; padding: 3.25rem 1.5rem 4.5rem; min-height: 0; }
+  .hero-text { width: 100%; }
+  .hero-text h1 { font-size: clamp(3.75rem, 17vw, 4.75rem); line-height: .86; }
+  .hero-text > p { margin: 1.5rem 0; font-size: 1rem; line-height: 1.72; }
+  .time-whisper { margin: -.35rem 0 1.25rem; }
+  .hero-photo { width: min(88%, 21rem); padding: .75rem .75rem 2.8rem; }
+  .promise-band { gap: 1.5rem; padding-block: 1.1rem; scrollbar-width: none; }
+  .memories-section { padding: 4.5rem 1.25rem; }
+  .section-heading { margin-bottom: 2.75rem; }
+  .section-heading h2, .together-copy h2, .letter-intro h2 { font-size: clamp(2.75rem, 13vw, 3.75rem); }
+  .memory-grid { columns: 1; max-width: 22rem; margin-inline: auto; }
+  .memory-card { margin-bottom: 1.5rem; padding: .65rem .65rem 2.7rem; }
+  .memory-card figcaption { font-size: .98rem; }
+  .together-section { padding: 4.5rem 1.5rem; gap: 2.5rem; }
+  .steps article { padding-block: 1.25rem; }
+  .secret-friends { gap: .25rem; justify-content: space-between; margin-top: 1rem; }
+  .secret-friends .gift-button { width: 5rem; min-width: 5rem; min-height: 7.5rem; }
+  .secret-friends .story-creature-svg { width: 4.25rem; height: 4.25rem; }
+  .friend-heart { font-size: .7rem; }
+  .letter-section { min-height: 0; padding: 4.5rem 1.25rem; gap: 2rem; }
+  .envelope-wrap { min-height: 22rem; }
+  .envelope { width: 100%; }
+  .love-letter { transform: none; }
+  .final-section { min-height: 0; padding: 4.5rem 1.25rem calc(4.5rem + env(safe-area-inset-bottom)); gap: 2rem; }
+  .final-polaroids { min-height: 21rem; }
+  .music-drawer { top: calc(4.5rem + env(safe-area-inset-top)); }
+}
+
+@media (hover: none) {
+  .gift-button:hover:not(:disabled), .secret-friends .gift-button:hover .story-creature-svg { transform: none; }
+  .gift-button-paper:hover:not(:disabled) { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-progress span { transition: none; }
+  .cover-creatures .story-creature-svg, .secret-friends .gift-button.is-happy .story-creature-svg, .music-drawer, .secret-note { animation: none; }
 }
