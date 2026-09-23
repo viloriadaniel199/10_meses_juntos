@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Heart, MailOpen, Music2, Pause, Play, Sparkles } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { GiftButton } from "@/components/GiftButton";
 import photo01 from "@/assets/Screenshot_20260923_134213_Gallery.jpg.asset.json";
 import photo02 from "@/assets/Screenshot_20260923_134221_Gallery.jpg.asset.json";
@@ -153,11 +153,11 @@ function Index() {
           ))}
         </div>
         <div className="secret-friends" data-reveal>
-          <button onClick={celebrate} aria-label="Tocar a la lobita para una sorpresa"><span>🐺</span><small>tu lobita</small></button>
+          <GiftButton kind="icon" onClick={celebrate} aria-label="Tocar a la lobita para una sorpresa"><span>🐺</span><small>tu lobita</small></GiftButton>
           <span className="friend-heart">♥</span>
-          <button onClick={celebrate} aria-label="Tocar al dinosaurio para una sorpresa"><span>🦕</span><small>un amor jurásico</small></button>
+          <GiftButton kind="icon" onClick={celebrate} aria-label="Tocar al dinosaurio para una sorpresa"><span>🦕</span><small>un amor jurásico</small></GiftButton>
           <span className="friend-heart">♥</span>
-          <button onClick={celebrate} aria-label="Tocar al gatito para una sorpresa"><span>🐈</span><small>mimos infinitos</small></button>
+          <GiftButton kind="icon" onClick={celebrate} aria-label="Tocar al gatito para una sorpresa"><span>🐈</span><small>mimos infinitos</small></GiftButton>
         </div>
       </section>
 
@@ -202,7 +202,7 @@ function Index() {
 
       <footer>Hecho con todo mi amor · 23 · ♡</footer>
       <div className="heart-rain" aria-hidden="true">
-        {hearts.map((heart) => <span key={heart} style={{ "--i": heart } as React.CSSProperties}>♥</span>)}
+        {hearts.map((heart) => <span key={heart} style={{ "--i": heart } as CSSProperties}>♥</span>)}
       </div>
     </main>
   );
