@@ -58,7 +58,7 @@ function Index() {
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((entry) => {
         if (entry.isIntersecting && entry.target instanceof HTMLElement) {
-          entry.target.dataset.visible = "true";
+          entry.target.dataset["visible"] = "true";
         }
       }),
       { threshold: 0.12 },
