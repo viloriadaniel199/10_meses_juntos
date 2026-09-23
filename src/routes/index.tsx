@@ -104,7 +104,7 @@ function Index() {
       {musicOpen && (
         <aside className="music-drawer" aria-label="Nuestra canción">
           <div><Music2 aria-hidden="true" /><span><strong>Nuestra canción</strong>A Pedir Su Mano · Juan Luis Guerra</span></div>
-          <a href="https://www.youtube.com/watch?v=_koz_f4mthE" target="_blank" rel="noreferrer"><Play aria-hidden="true" /> Escuchar</a>
+          <a href="https://youtu.be/VQQOemYLu3o" target="_blank" rel="noreferrer"><Play aria-hidden="true" /> Escuchar</a>
         </aside>
       )}
 
