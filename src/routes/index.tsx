@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Heart, MailOpen, Music2, Pause, Play, Sparkles } from "lucide-react";
 import { useEffect, useState, type CSSProperties } from "react";
 import { GiftButton } from "@/components/GiftButton";
+import { StoryCreature } from "@/components/StoryCreature";
 import photo01 from "@/assets/Screenshot_20260923_134213_Gallery.jpg.asset.json";
 import photo02 from "@/assets/Screenshot_20260923_134221_Gallery.jpg.asset.json";
 import photo03 from "@/assets/Screenshot_20260923_134254_Gallery.jpg.asset.json";
@@ -51,6 +52,10 @@ function Index() {
   const [letterOpen, setLetterOpen] = useState(false);
   const [musicOpen, setMusicOpen] = useState(false);
   const [hearts, setHearts] = useState<number[]>([]);
+  const [progress, setProgress] = useState(0);
+  const [greeting, setGreeting] = useState("Este momento es solo para nosotros");
+  const [activeCreature, setActiveCreature] = useState<string | null>(null);
+  const [secretTaps, setSecretTaps] = useState(0);
 
   useEffect(() => {
     if (!opened) return;
@@ -67,9 +72,39 @@ function Index() {
     return () => observer.disconnect();
   }, [opened]);
 
+  useEffect(() => {
+    const hour = new Date().getHours();
+    setGreeting(hour < 12 ? "Buenos días, mi amor" : hour < 18 ? "Esta tarde es solo para nosotros" : "Buenas noches, mi lobita");
+  }, []);
+
+  useEffect(() => {
+    if (!opened) return;
+    const updateProgress = () => {
+      const root = document.documentElement;
+      const distance = root.scrollHeight - window.innerHeight;
+      setProgress(distance > 0 ? Math.min(1, window.scrollY / distance) : 0);
+    };
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    return () => window.removeEventListener("scroll", updateProgress);
+  }, [opened]);
+
   const celebrate = () => {
     setHearts(Array.from({ length: 28 }, (_, index) => index));
+    if (navigator.vibrate) navigator.vibrate(35);
     window.setTimeout(() => setHearts([]), 3400);
+  };
+
+  const meetFriend = (friend: string) => {
+    setActiveCreature(friend);
+    celebrate();
+    window.setTimeout(() => setActiveCreature(null), 1400);
+  };
+
+  const revealSecret = () => {
+    const next = secretTaps + 1;
+    setSecretTaps(next);
+    if (next === 3) celebrate();
   };
 
   if (!opened) {
@@ -86,15 +121,18 @@ function Index() {
             <MailOpen aria-hidden="true" /> Abrir mi regalo
           </GiftButton>
         </div>
-        <div className="cover-creatures" aria-hidden="true"><span>🐈</span><span>🦕</span><span>🐺</span></div>
+        <div className="cover-creatures" aria-hidden="true">
+          <StoryCreature kind="cat" /><StoryCreature kind="dinosaur" /><StoryCreature kind="wolf" />
+        </div>
       </main>
     );
   }
 
   return (
     <main className="gift-page">
+      <div className="story-progress" aria-hidden="true"><span style={{ transform: `scaleX(${progress})` }} /></div>
       <header className="topbar">
-        <a href="#inicio" className="monogram" aria-label="Ir al inicio">D<span>♥</span>L</a>
+        <a href="#inicio" className="monogram" aria-label="Ir al inicio" onClick={revealSecret} title="Nuestro pequeño secreto">D<span>♥</span>L</a>
         <span>10 meses contigo</span>
         <GiftButton kind="icon" onClick={() => setMusicOpen((value) => !value)} aria-label={musicOpen ? "Cerrar nuestra canción" : "Escuchar nuestra canción"} title="Nuestra canción">
           {musicOpen ? <Pause aria-hidden="true" /> : <Music2 aria-hidden="true" />}
@@ -102,7 +140,7 @@ function Index() {
       </header>
 
       {musicOpen && (
-        <aside className="music-drawer" aria-label="Nuestra canción">
+        <aside className="music-drawer" aria-label="Nuestra canción" aria-live="polite">
           <div><Music2 aria-hidden="true" /><span><strong>Nuestra canción</strong>A Pedir Su Mano · Juan Luis Guerra</span></div>
           <a href="https://youtu.be/VQQOemYLu3o" target="_blank" rel="noreferrer"><Play aria-hidden="true" /> Escuchar</a>
         </aside>
@@ -113,6 +151,7 @@ function Index() {
           <span className="tiny-kicker">Una historia que elijo todos los días</span>
           <h1><em>10</em> meses<br />de nosotros</h1>
           <p>De risas, besos, días bonitos, días difíciles y ese amor que siempre encuentra el camino de vuelta.</p>
+          <span className="time-whisper">{greeting} ♡</span>
           <a href="#recuerdos" className="scroll-note">Baja despacito <span>↓</span></a>
         </div>
         <figure className="hero-photo" data-reveal>
@@ -156,13 +195,14 @@ function Index() {
             <article key={number}><span>{number}</span><div><h3>{title}</h3><p>{copy}</p></div></article>
           ))}
         </div>
-        <div className="secret-friends" data-reveal>
-          <GiftButton kind="icon" onClick={celebrate} aria-label="Tocar a la lobita para una sorpresa"><span>🐺</span><small>tu lobita</small></GiftButton>
+        <div className="secret-friends" data-reveal aria-label="Nuestros tres cómplices">
+          <GiftButton kind="icon" className={activeCreature === "wolf" ? "is-happy" : ""} onClick={() => meetFriend("wolf")} aria-label="Saludar a tu lobita" title="Saludar a tu lobita"><StoryCreature kind="wolf" /><small>tu lobita</small></GiftButton>
           <span className="friend-heart">♥</span>
-          <GiftButton kind="icon" onClick={celebrate} aria-label="Tocar al dinosaurio para una sorpresa"><span>🦕</span><small>un amor jurásico</small></GiftButton>
+          <GiftButton kind="icon" className={activeCreature === "dinosaur" ? "is-happy" : ""} onClick={() => meetFriend("dinosaur")} aria-label="Saludar a nuestro dinosaurio" title="Saludar a nuestro dinosaurio"><StoryCreature kind="dinosaur" /><small>amor jurásico</small></GiftButton>
           <span className="friend-heart">♥</span>
-          <GiftButton kind="icon" onClick={celebrate} aria-label="Tocar al gatito para una sorpresa"><span>🐈</span><small>mimos infinitos</small></GiftButton>
+          <GiftButton kind="icon" className={activeCreature === "cat" ? "is-happy" : ""} onClick={() => meetFriend("cat")} aria-label="Saludar a nuestro gatito" title="Saludar a nuestro gatito"><StoryCreature kind="cat" /><small>mimos infinitos</small></GiftButton>
         </div>
+        <p className="creature-message" aria-live="polite">{activeCreature ? "¡Te mandó un corazón!" : "Toca a uno de nuestros cómplices"}</p>
       </section>
 
       <section className="letter-section">
@@ -200,7 +240,7 @@ function Index() {
           <p>Gracias por estos meses, por tu tiempo, por tu apoyo y por hacerme tan feliz.</p>
           <h2>Te amo demasiado,<br /><em>mi lobita linda.</em></h2>
           <span>Por muchos 23 más.</span>
-          <GiftButton onClick={celebrate}><Heart aria-hidden="true" /> Toca aquí, mi amor</GiftButton>
+          <GiftButton onClick={celebrate}><Heart aria-hidden="true" /> Celebrar nuestros 10 meses</GiftButton>
         </div>
       </section>
 
@@ -208,6 +248,7 @@ function Index() {
       <div className="heart-rain" aria-hidden="true">
         {hearts.map((heart) => <span key={heart} style={{ "--i": heart } as CSSProperties}>♥</span>)}
       </div>
+      {secretTaps >= 3 && <div className="secret-note" role="status">Encontraste nuestro secreto: te elegiría en todas las vidas. ♡</div>}
     </main>
   );
 }
