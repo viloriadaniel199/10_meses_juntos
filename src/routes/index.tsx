@@ -153,7 +153,15 @@ function Index() {
       {musicOpen && (
         <aside className="music-drawer" aria-label="Nuestra canción" aria-live="polite">
           <div><Music2 aria-hidden="true" /><span><strong>Nuestra canción</strong>A Pedir Su Mano · Juan Luis Guerra</span></div>
-          <a href="https://youtu.be/VQQOemYLu3o" target="_blank" rel="noreferrer"><Play aria-hidden="true" /> Escuchar</a>
+          <iframe
+            width="100%"
+              height="200"
+                src="https://www.youtube.com/embed/VQQOemYLu3o"
+                  title="Nuestra canción"
+                    frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        ></iframe>
         </aside>
       )}
 
