@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Cabeza del gato -->
+  <ellipse cx="32" cy="36" rx="22" ry="20" fill="#1a1a1a"/>
+  <!-- Orejas -->
+  <path d="M14 22 L12 8 L24 18 Z" fill="#1a1a1a"/>
+  <path d="M50 22 L52 8 L40 18 Z" fill="#1a1a1a"/>
+  <!-- Interior de las orejas -->
+  <path d="M16 20 L15 12 L22 18 Z" fill="#e8a4c8"/>
+  <path d="M48 20 L49 12 L42 18 Z" fill="#e8a4c8"/>
+  <!-- Mancha blanca alrededor del ojo izquierdo -->
+  <ellipse cx="23" cy="34" rx="7" ry="8" fill="#ffffff"/>
+  <!-- Mancha blanca en el pecho -->
+  <ellipse cx="32" cy="48" rx="8" ry="5" fill="#ffffff"/>
+  <!-- Mancha blanca pequeña en el otro lado -->
+  <ellipse cx="44" cy="42" rx="4" ry="5" fill="#ffffff"/>
+  <!-- Ojos -->
+  <ellipse cx="23" cy="34" rx="2.5" ry="3.5" fill="#1a1a1a"/>
+  <ellipse cx="41" cy="34" rx="2.5" ry="3.5" fill="#1a1a1a"/>
+  <!-- Brillo de los ojos -->
+  <circle cx="24" cy="32.5" r="0.9" fill="#ffffff"/>
+  <circle cx="42" cy="32.5" r="0.9" fill="#ffffff"/>
+  <!-- Naricita -->
+  <path d="M30 42 Q32 44 34 42 Q33 40 32 40 Q31 40 30 42 Z" fill="#e8a4c8"/>
+  <!-- Boca -->
+  <path d="M32 44 Q29 47 27 45" stroke="#1a1a1a" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+  <path d="M32 44 Q35 47 37 45" stroke="#1a1a1a" stroke-width="0.8" fill="none" stroke-linecap="round"/>
+  <!-- Bigotes -->
+  <line x1="14" y1="40" x2="20" y2="41" stroke="#1a1a1a" stroke-width="0.6" stroke-linecap="round"/>
+  <line x1="14" y1="44" x2="20" y2="44" stroke="#1a1a1a" stroke-width="0.6" stroke-linecap="round"/>
+  <line x1="50" y1="40" x2="44" y2="41" stroke="#1a1a1a" stroke-width="0.6" stroke-linecap="round"/>
+  <line x1="50" y1="44" x2="44" y2="44" stroke="#1a1a1a" stroke-width="0.6" stroke-linecap="round"/>
+  <!-- Corazón verde en las patitas -->
+  <path d="M32 60 C28 56 24 54 24 50 C24 48 26 47 27.5 48 C29 49 32 52 32 52 C32 52 35 49 36.5 48 C38 47 40 48 40 50 C40 54 36 56 32 60 Z" fill="#3f7d58"/>
+</svg>
