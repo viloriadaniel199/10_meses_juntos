@@ -150,7 +150,7 @@ function Index() {
     <main className="gift-page">
       <div className="story-progress" aria-hidden="true"><span style={{ transform: `scaleX(${progress})` }} /></div>
       <header className="topbar">
-        <a href="#inicio" className="monogram" aria-label="Ir al inicio" onClick={revealSecret} title="Nuestro pequeño secreto">D<span>♥</span>L</a>
+        <a href="#inicio" className="monogram" aria-label="Ir al inicio" onClick={revealSecret} title="Nuestro pequeño secreto">D<span>♥</span>A</a>
         <span>10 meses contigo</span>
         <GiftButton kind="icon" onClick={() => setMusicOpen((value) => !value)} aria-label={musicOpen ? "Cerrar nuestra canción" : "Escuchar nuestra canción"} title="Nuestra canción">
           {musicOpen ? <Pause aria-hidden="true" /> : <Music2 aria-hidden="true" />}
