@@ -2,8 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Heart, MailOpen, Music2, Pause, Play, Sparkles } from "lucide-react";
 import { useEffect, useState, type CSSProperties } from "react";
 import { GiftButton } from "@/components/GiftButton";
+import { FloatingHearts } from "@/components/FloatingHearts";
 import { LoveSlider } from "@/components/LoveSlider";
 import { StoryCreature } from "@/components/StoryCreature";
+import { useLenis } from "@/hooks/useLenis";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 // Image paths served from /public/images/ — no Lovable asset server needed
 const IMG = {
   photo01: "/images/Screenshot_20260923_134213_Gallery.jpg",
@@ -61,6 +64,7 @@ const letter = [
 ];
 
 function Index() {
+  const lenis = useLenis();
   const [opened, setOpened] = useState(false);
   const [letterOpen, setLetterOpen] = useState(false);
   const [musicOpen, setMusicOpen] = useState(false);
@@ -71,20 +75,7 @@ function Index() {
   const [secretTaps, setSecretTaps] = useState(0);
   const [celebrating, setCelebrating] = useState(false);
 
-  useEffect(() => {
-    if (!opened) return;
-    const elements = document.querySelectorAll<HTMLElement>("[data-reveal]");
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.target instanceof HTMLElement) {
-          entry.target.dataset["visible"] = "true";
-        }
-      }),
-      { threshold: 0.12 },
-    );
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, [opened]);
+  useScrollReveal(lenis, opened);
 
   useEffect(() => {
     const hour = new Date().getHours();
@@ -149,6 +140,7 @@ function Index() {
 
   return (
     <main className="gift-page">
+      <FloatingHearts />
       <div className="story-progress" aria-hidden="true"><span style={{ transform: `scaleX(${progress})` }} /></div>
       <header className="topbar">
         <a href="#inicio" className="monogram" aria-label="Ir al inicio" onClick={revealSecret} title="Nuestro pequeño secreto">D<span>♥</span>A</a>
