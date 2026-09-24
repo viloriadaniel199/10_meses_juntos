@@ -3,16 +3,28 @@ import { Heart, MailOpen, Music2, Pause, Play, Sparkles } from "lucide-react";
 import { useEffect, useState, type CSSProperties } from "react";
 import { GiftButton } from "@/components/GiftButton";
 import { StoryCreature } from "@/components/StoryCreature";
-import photo01 from "@/assets/Screenshot_20260923_134213_Gallery.jpg.asset.json";
-import photo02 from "@/assets/Screenshot_20260923_134221_Gallery.jpg.asset.json";
-import photo03 from "@/assets/Screenshot_20260923_134254_Gallery.jpg.asset.json";
-import photo04 from "@/assets/Screenshot_20260923_134309_Gallery.jpg.asset.json";
-import photo05 from "@/assets/Screenshot_20260923_134322_Gallery.jpg.asset.json";
-import photo06 from "@/assets/Screenshot_20260923_134401_Gallery.jpg.asset.json";
-import photo07 from "@/assets/Screenshot_20260923_134423_Gallery.jpg.asset.json";
-import photo08 from "@/assets/Screenshot_20260923_134444_Gallery.jpg.asset.json";
-import photo09 from "@/assets/Screenshot_20260923_134502_Gallery.jpg.asset.json";
-import photo10 from "@/assets/Screenshot_20260923_134727_Gallery.jpg.asset.json";
+// Image paths served from /public/images/ — no Lovable asset server needed
+const IMG = {
+  photo01: "/images/Screenshot_20260923_134213_Gallery.jpg",
+  photo02: "/images/Screenshot_20260923_134221_Gallery.jpg",
+  photo03: "/images/Screenshot_20260923_134254_Gallery.jpg",
+  photo04: "/images/Screenshot_20260923_134309_Gallery.jpg",
+  photo05: "/images/Screenshot_20260923_134322_Gallery.jpg",
+  photo06: "/images/Screenshot_20260923_134401_Gallery.jpg",
+  photo07: "/images/Screenshot_20260923_134423_Gallery.jpg",
+  photo08: "/images/Screenshot_20260923_134444_Gallery.jpg",
+  photo09: "/images/Screenshot_20260923_134502_Gallery.jpg",
+  photo10: "/images/Screenshot_20260923_134727_Gallery.jpg",
+} as const;
+
+// Fallback shown when an image fails to load
+const PLACEHOLDER_SVG =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23fdf2f8'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='72' fill='%23e8a4c8'%3E%E2%99%A5%3C/text%3E%3C/svg%3E";
+
+function handleImgError(e: React.SyntheticEvent<HTMLImageElement>) {
+  const img = e.currentTarget;
+  if (img.src !== PLACEHOLDER_SVG) img.src = PLACEHOLDER_SVG;
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -29,16 +41,16 @@ export const Route = createFileRoute("/")({
 });
 
 const photos = [
-  { src: photo01.url, caption: "Donde siempre quiero estar", shape: "portrait", tilt: "left" },
-  { src: photo02.url, caption: "Besitos que arreglan el mundo", shape: "portrait", tilt: "right" },
-  { src: photo03.url, caption: "Compartir la mesa, compartir la vida", shape: "landscape", tilt: "left" },
-  { src: photo04.url, caption: "Tu sonrisa, mi lugar favorito", shape: "landscape", tilt: "right" },
-  { src: photo05.url, caption: "Todas tus versiones me hacen feliz", shape: "portrait", tilt: "left" },
-  { src: photo06.url, caption: "Mi niña hermosa y sus locuras", shape: "portrait", tilt: "right" },
-  { src: photo07.url, caption: "La vida sabe más bonito contigo", shape: "landscape", tilt: "left" },
-  { src: photo08.url, caption: "Hasta tus caritas serias me encantan", shape: "portrait", tilt: "right" },
-  { src: photo09.url, caption: "Sol, mar y nosotros", shape: "landscape", tilt: "left" },
-  { src: photo10.url, caption: "Siempre tú, siempre nosotros", shape: "landscape", tilt: "right" },
+  { src: IMG.photo01, caption: "Donde siempre quiero estar",          shape: "portrait",  tilt: "left",  alt: "Los dos juntos, donde siempre quiero estar" },
+  { src: IMG.photo02, caption: "Besitos que arreglan el mundo",         shape: "portrait",  tilt: "right", alt: "Un besito tuyo que me arregla el mundo entero" },
+  { src: IMG.photo03, caption: "Compartir la mesa, compartir la vida",  shape: "landscape", tilt: "left",  alt: "Compartiendo la mesa y la vida juntos" },
+  { src: IMG.photo04, caption: "Tu sonrisa, mi lugar favorito",         shape: "landscape", tilt: "right", alt: "Tu sonrisa, el lugar más bonito del mundo para mí" },
+  { src: IMG.photo05, caption: "Todas tus versiones me hacen feliz",    shape: "portrait",  tilt: "left",  alt: "Todas las versiones de ti me hacen inmensamente feliz" },
+  { src: IMG.photo06, caption: "Mi niña hermosa y sus locuras",         shape: "portrait",  tilt: "right", alt: "Mi niña hermosa con todas sus locuras que adoro" },
+  { src: IMG.photo07, caption: "La vida sabe más bonito contigo",       shape: "landscape", tilt: "left",  alt: "La vida sabe más bonita cuando estamos juntos" },
+  { src: IMG.photo08, caption: "Hasta tus caritas serias me encantan",  shape: "portrait",  tilt: "right", alt: "Hasta tus caritas serias me enamoran más cada día" },
+  { src: IMG.photo09, caption: "Sol, mar y nosotros",                   shape: "landscape", tilt: "left",  alt: "Nosotros dos bajo el sol junto al mar" },
+  { src: IMG.photo10, caption: "Siempre tú, siempre nosotros",          shape: "landscape", tilt: "right", alt: "Siempre tú, siempre nosotros dos" },
 ];
 
 const letter = [
@@ -162,7 +174,14 @@ function Index() {
         </div>
         <figure className="hero-photo" data-reveal>
           <span className="tape" aria-hidden="true" />
-          <img src={photo04.url} alt="Nosotros sonriendo juntos" />
+          <img
+            src={IMG.photo04}
+            alt="Nosotros sonriendo juntos, mi lugar favorito en el mundo"
+            width={600}
+            height={750}
+            style={{ objectFit: "cover", borderRadius: "1rem", width: "100%", height: "auto" }}
+            onError={handleImgError}
+          />
           <figcaption>Mi lugar favorito es contigo ♡</figcaption>
         </figure>
         <div className="hero-doodle" aria-hidden="true">10<br /><small>mesesitos</small></div>
@@ -182,7 +201,15 @@ function Index() {
           {photos.map((photo, index) => (
             <figure className={`memory-card ${photo.shape} tilt-${photo.tilt}`} data-reveal key={photo.src}>
               <span className="photo-number">0{index + 1}</span>
-              <img src={photo.src} alt={photo.caption} loading={index > 2 ? "lazy" : "eager"} />
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                loading={index > 2 ? "lazy" : "eager"}
+                width={index % 2 === 0 ? 600 : 800}
+                height={index % 2 === 0 ? 750 : 500}
+                style={{ objectFit: "cover", borderRadius: "0.75rem", width: "100%", height: "100%" }}
+                onError={handleImgError}
+              />
               <figcaption>{photo.caption}</figcaption>
             </figure>
           ))}
@@ -238,8 +265,24 @@ function Index() {
 
       <section className="final-section">
         <div className="final-polaroids" data-reveal>
-          <img src={photo01.url} alt="Un beso para mi lobita" />
-          <img src={photo09.url} alt="Nosotros juntos en la playa" />
+          <img
+            src={IMG.photo01}
+            alt="Un beso para mi lobita, el primero de muchos más"
+            loading="lazy"
+            width={400}
+            height={500}
+            style={{ objectFit: "cover", borderRadius: "0.75rem", width: "100%", height: "auto" }}
+            onError={handleImgError}
+          />
+          <img
+            src={IMG.photo09}
+            alt="Nosotros juntos en la playa, sol, mar y nuestro amor"
+            loading="lazy"
+            width={400}
+            height={500}
+            style={{ objectFit: "cover", borderRadius: "0.75rem", width: "100%", height: "auto" }}
+            onError={handleImgError}
+          />
         </div>
         <div className="final-copy" data-reveal>
           <Heart aria-hidden="true" />
