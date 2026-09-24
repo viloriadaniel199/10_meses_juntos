@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Heart, MailOpen, Music2, Pause, Play, Sparkles } from "lucide-react";
 import { useEffect, useState, type CSSProperties } from "react";
 import { GiftButton } from "@/components/GiftButton";
+import { LoveSlider } from "@/components/LoveSlider";
 import { StoryCreature } from "@/components/StoryCreature";
 // Image paths served from /public/images/ — no Lovable asset server needed
 const IMG = {
@@ -262,6 +263,8 @@ function Index() {
           )}
         </div>
       </section>
+
+      <section className="love-slider-section"><LoveSlider /></section>
 
       <section className="final-section">
         <div className="final-polaroids" data-reveal>
